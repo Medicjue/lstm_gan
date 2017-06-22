@@ -7,6 +7,13 @@ import numpy as np
 import utils
 from lstm_gan import LSTMGAN
 
+## Fix Encoding Issue Start
+import sys
+import codecs
+if sys.stderr.encoding != 'utf-8':
+    sys.stderr = codecs.getwriter('utf-8')(sys.stderr, 'strict')
+## Fix Encoding Issue End
+
 DATASET_FILE = 'preprocessed.pickle'
 VOCABULARY_FILE = 'index_to_word.pickle'
 
