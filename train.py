@@ -10,8 +10,10 @@ from lstm_gan import LSTMGAN
 ## Fix Encoding Issue Start
 import sys
 import codecs
+if sys.stdout.encoding != 'utf-8':
+    sys.stdout = codecs.getwriter('utf-8')(sys.stdout.buffer, 'strict')
 if sys.stderr.encoding != 'utf-8':
-    sys.stderr = codecs.getwriter('utf-8')(sys.stderr, 'strict')
+    sys.stderr = codecs.getwriter('utf-8')(sys.stderr.buffer, 'strict')
 ## Fix Encoding Issue End
 
 DATASET_FILE = 'preprocessed.pickle'
