@@ -187,7 +187,7 @@ class LSTMGAN(object):
                     input_ = tf.nn.embedding_lookup(embedding, labels)
                     outputs.append(tf.expand_dims(logits, 1))
 
-            output = tf.concat(1, outputs)
+            output = tf.concat(outputs, 1) ## Modified due to tensorflow version
         variables = [v for v in tf.all_variables() if 'generator_model' in v.name]
 
         return output, variables
