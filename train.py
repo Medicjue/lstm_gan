@@ -27,7 +27,10 @@ VOCABULARY_SIZE = 10000
 SENTENCE_START_TOKEN = "START"
 SENTENCE_END_TOKEN = "END"
 
-
+def uniArray(array_unicode):
+    items = [x.encode('utf-8') for x in array_unicode]
+    array_unicode = np.array([items]) # remove the brackets for line breaks
+    return array_unicode
 
 def main():
     args = utils.get_args()
@@ -82,7 +85,7 @@ def main():
                         outputSentences.append(' '.join(index2word[i] for i in sent))
                     print("Processed {} noise inputs with train cost {}".format((ind+1)*batch_size, cost))
                 
-                np.savetxt('genSentences.txt', outputSentences, fmt = '%s')
+                np.savetxt('genSentences.txt', uniArray(outputSentences), fmt = '%s')
                 offset += batch_size*args.disc_count
                 if args.save_model:
                     saver.save(sess, utils.SAVER_FILE)
