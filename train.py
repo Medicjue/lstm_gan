@@ -16,6 +16,8 @@ if sys.stderr.encoding != 'utf-8':
     sys.stderr = codecs.getwriter('utf-8')(sys.stderr.buffer, 'strict')
 ## Fix Encoding Issue End
 
+outputSentences = []
+
 DATASET_FILE = 'preprocessed.pickle'
 VOCABULARY_FILE = 'index_to_word.pickle'
 
@@ -74,9 +76,11 @@ def main():
                     cost = lstm_gan.train_gen_on_batch(session, noise)
                     if args.gen_sent:
                         sent = lstm_gan.generate_sent(session, np.random.random(size=(noise_size, )))
-                        print(' '.join(index2word[i] for i in sent))
+                        #print(' '.join(index2word[i] for i in sent))
+                        outputSentences.append(' '.join(index2word[i] for i in sent))
                     print("Processed {} noise inputs with train cost {}".format((ind+1)*batch_size, cost))
                 
+                np.savetxt('genSentences.txt', uniArray(array_unicode), fmt = '%s')
                 offset += batch_size*args.disc_count
                 if args.save_model:
                     saver.save(sess, utils.SAVER_FILE)
