@@ -27,6 +27,8 @@ VOCABULARY_SIZE = 10000
 SENTENCE_START_TOKEN = "START"
 SENTENCE_END_TOKEN = "END"
 
+
+
 def main():
     args = utils.get_args()
     dataset = utils.load_dataset(os.path.join(args.data_path, DATASET_FILE))
@@ -76,11 +78,11 @@ def main():
                     cost = lstm_gan.train_gen_on_batch(session, noise)
                     if args.gen_sent:
                         sent = lstm_gan.generate_sent(session, np.random.random(size=(noise_size, )))
-                        #print(' '.join(index2word[i] for i in sent))
+                        print(' '.join(index2word[i] for i in sent))
                         outputSentences.append(' '.join(index2word[i] for i in sent))
                     print("Processed {} noise inputs with train cost {}".format((ind+1)*batch_size, cost))
                 
-                np.savetxt('genSentences.txt', uniArray(array_unicode), fmt = '%s')
+                np.savetxt('genSentences.txt', outputSentences, fmt = '%s')
                 offset += batch_size*args.disc_count
                 if args.save_model:
                     saver.save(sess, utils.SAVER_FILE)
